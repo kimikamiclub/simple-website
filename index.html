@@ -1,11 +1,116 @@
+<!DOCTYPE html>
 <html>
 <head>
-  <title>
-    Simple website
-  </title> 
+
+<!-- this is a comment in HTML -->
+
+<title>My head is not empty</title>
+<style>
+
+/* (this is a comment) CSS - cascade style sheet */
+
+#box {
+	background-color : blue;
+	position: absolute;
+	width: 300px;
+	height: 200px;
+	left: 50px;
+	top: 80px;
+}
+
+</style>
+
+<script>
+/* This is a part of our document that contains JavaScript code */
+
+/* ctrl + shift + C */
+
+/* Unlike Python, JavaScript is not indentation-sensitive */
+
+/*
+ * We are going to implement a drag&drop mechanism
+ * so that when you press the mouse over the blue box,
+ * we will start dragging it.
+ */
+
+/*
+ * In order to do this, we need to handle three events:
+ * 1. onmousedown
+ * 2. onmousemove
+ * 3. onmouseup
+ */
+var dragging = false;
+var previousX, previousY;
+
+var students = [
+	'Arnold',
+	'Dylan',
+	'Komila',
+	'Simon',
+	'Ahmed',
+	'Godfrey',
+	'Roparadzo',
+	'Yassin',
+	'Laura',
+	'Emma-Vassily',
+	'Sibongile'
+];
+
+function student() {
+	return students[Math.floor(Math.random() * students.length)];
+}
+
+
+function startDragging(event) {
+	dragging = true;
+	previousX = event.clientX;
+	previousY = event.clientY;
+}
+
+function stopDragging(event) {
+	dragging = false;
+}
+
+function drag(event) {
+	if (dragging) {
+		// Document Object Model - DOM
+		var box = document.getElementById('box');
+		var displacementX = event.clientX - previousX;
+		var displacementY = event.clientY - previousY;
+
+		console.log(box.offsetLeft);
+		console.log(box.offsetTop);
+		
+		
+		
+		
+		box.style.left = (box.offsetLeft + displacementX)+"px";
+		box.style.top = (box.offsetTop + displacementY)+"px";
+		
+		
+		previousX = event.clientX;
+		previousY = event.clientY;
+	}
+}
+
+function pickStudent() {
+	var lucky = student();
+	var message = document.getElementById('message');
+	message.innerText = "The lucky student is "+lucky;
+}
+
+
+</script>
+
 </head>
 
 <body>
-Hello there!
+
+<div id='box' onmousedown='startDragging(event)' onmouseup='stopDragging(event)' onmousemove='drag(event)'>
+<button onclick='pickStudent()'>Pick a volunteer</button>
+<p id='message'>Please pick one</p>
+</div>
+
 </body>
+
 </html>
